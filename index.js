@@ -111,17 +111,18 @@ client.once('ready', () => {
 
 
 client.on('message', message => {
-  if (message.content === `${config.prefix}ping`) {
+  const m = message.content.toLowerCase()
+  if (m === `${config.prefix}ping`) {
     message.channel.send('Pong.')
-  } else if (message.content === `${config.prefix}server`) {
+  } else if (m === `${config.prefix}help` || m === `${config.prefix}commands`) {
+    message.channel.send(`${config.prefix}ping\n${config.prefix}server\n${config.prefix}daysToEnd\n${config.prefix}help\n${config.prefix}commands`)
+  } else if (m === `${config.prefix}server`) {
     message.channel.send(`Server name: ${message.guild.name}\nTotal members: ${message.guild.memberCount}`)
-  }
-  
-  if (message.content.toLowerCase() === `${config.prefix}daysToEnd`.toLowerCase()) {
+  } else if (m === `${config.prefix}daysToEnd`.toLowerCase()) {
     let date = new Date()
     let month = date.getMonth() + 1
     if (month === 11) {
-      message.channel.send(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() - date.getDate() + ' 📆')
+      message.channel.send(`Zbývá ${new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() - date.getDate()} 📆`)
     } else if (month > 11) {
       message.channel.send('Už je po všem. 🏁')
     } else if (month < 11) {
