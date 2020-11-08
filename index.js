@@ -9,6 +9,8 @@ const fetch = require("node-fetch")
 const fs = require('fs')
 const CronJob = require('cron').CronJob
 const figlet = require('figlet')
+const moment = require('moment')
+moment.locale('cs')
 
 function sendMessageToChannel() {
   client.channels.cache.forEach(channel => {
@@ -113,6 +115,18 @@ client.on('message', message => {
     message.channel.send('Pong.')
   } else if (message.content === `${config.prefix}server`) {
     message.channel.send(`Server name: ${message.guild.name}\nTotal members: ${message.guild.memberCount}`)
+  }
+  
+  if (message.content.toLowerCase() === `${config.prefix}daysToEnd`.toLowerCase()) {
+    let date = new Date()
+    let month = date.getMonth() + 1
+    if (month === 11) {
+      message.channel.send(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() - date.getDate() + ' 📆')
+    } else if (month > 11) {
+      message.channel.send('Už je po všem. 🏁')
+    } else if (month < 11) {
+      message.channel.send(`Připrav se, výzva začíná ${moment('1.12.', 'D.MM.').fromNow()}`)
+    }
   }
 })
 
