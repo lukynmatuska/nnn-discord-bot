@@ -1,0 +1,21 @@
+{
+  "name": "nnn",
+  "description": "discord bot",
+  "version": "1.0",
+  "maintainers": [
+    {
+      "name": "Lukas Matuska",
+      "email": "lukynmatuska@gmail.com",
+      "web": "lukasmatuska.cz"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "Beerware"
+    }
+  ],
+  "dependencies": {
+    "dotenv": "8.2.0",
+    "discord.js": "12.3.1"
+  }
+}
