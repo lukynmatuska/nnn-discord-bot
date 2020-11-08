@@ -1,4 +1,4 @@
-# Matikar
+# NNN
 Discord bot
 
 ## Setup
