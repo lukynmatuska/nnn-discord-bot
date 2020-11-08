@@ -6,12 +6,52 @@ const config = require('./config')
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const fs = require('fs')
-var CronJob = require('cron').CronJob
+const CronJob = require('cron').CronJob
+const figlet = require('figlet')
 
 function sendMessageToChannel() {
   client.channels.cache.forEach(channel => {
     if (channel.id === process.env.DISCORD_CHANNEL) {
-      channel.send(new Date().getTime())
+        let msg1 = [
+            "Vstávat a cvičit!",
+            "Nový den nové dobrodružství.",
+            "Držme se bratři, ať vydržíme dnešní zkoušky.",
+            "Nepropadni pokušení! Nestaň se coomerem!",
+            "Potěšení je chvilkové, sláva je věčná! Za slávou bratři!"
+        ]
+
+        let msg2 = [
+            "@Fapstronaut, hola hej otevřte mi dveře. Zbloudil jsem při lovení coomerů!",
+            "@Fapstronaut úsvit nového dne. Víte, co máte dělat!",
+            "*famnára* **Fapstronoutům všech zemí, vydržte** @Fapstronaut",
+            "@Fapstronaut @Fapstronaut @Fapstronaut Teď to nemůžeme vzdát! Jsme tak blízko.",
+            "!Breaking! @Fapstronaut se stal synonymem slova frajer"
+        ]
+
+        let gifs = [
+            "https://media.giphy.com/media/3o7btSHUTdraHEsx0Y/giphy.gif",
+            "https://media.giphy.com/media/5xtDarIN81U0KvlnzKo/giphy.gif",
+            "https://media.giphy.com/media/l0MYLhyyzhHQEhjck/giphy.gif",
+            "https://media.giphy.com/media/6qFFgNgextP9u/giphy.gif",
+            "https://media.giphy.com/media/5xtDarrD3UV3Qk6N00E/giphy.gif",
+            "https://media.giphy.com/media/2sAitYulLo87u/giphy.gif",
+            "https://media.giphy.com/media/kyQiCZuymIOvKavFxt/giphy.gif",
+            "https://media.giphy.com/media/kHIJtQ981gP1C/giphy.gif"
+
+        ]
+
+        // Warcrime ahead!
+        let day = figlet.textSync(`den ${new Date().getDate()}.`)
+        let endMsg =  "```\n" + day + "\n```\n" +
+            msg1[Math.floor(Math.random() * msg1.length)] + "\n\n" +
+            msg2[Math.floor(Math.random() * msg2.length)] +
+            "\n\nDenní prezenčka :white_check_mark: / " +
+            ":negative_squared_cross_mark: .\n\n" +
+            "||Sláva vítězům, hanba poraženým...||\n\n\n" +
+            gifs[Math.floor(Math.random() * gifs.length)]
+
+
+      channel.send(endMsg)
     }
   })
 }
