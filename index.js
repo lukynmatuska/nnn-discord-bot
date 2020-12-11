@@ -12,9 +12,9 @@ const figlet = require('figlet')
 const moment = require('moment')
 moment.locale('cs')
 
-function sendMessageToChannel() {
-  client.channels.cache.forEach(channel => {
-    if (channel.id === process.env.DISCORD_CHANNEL) {
+function sendMessageToChannel(channel) {
+  client.channels.cache.forEach(ch => {
+    if (ch.id === channel) {
       let fapstronaut = `<@&${process.env.DISCORD_ROLE}>`
       let msg1 = [
         'Vstávat a cvičit!',
@@ -52,7 +52,7 @@ function sendMessageToChannel() {
         ':negative_squared_cross_mark: .\n\n' +
         '||Sláva vítězům, hanba poraženým...||\n\n\n'
 
-      channel
+      ch
         .send(endMsg)
         .then((message) => {
           message.react('✅')
@@ -79,7 +79,7 @@ function sendMessageToChannel() {
           res.body.pipe(dest)
           dest.on('close', () => {
             setTimeout(() => {
-              channel.send(new Discord.MessageAttachment(fs.readFileSync(filename), 'funny.gif'))
+              ch.send(new Discord.MessageAttachment(fs.readFileSync(filename), 'funny.gif'))
               console.log('done')
             }, 2000)
           })
@@ -106,7 +106,7 @@ client.once('ready', () => {
   }
 
   // Set cron job
-  new CronJob(process.env.CRON_JOB_TIMING, sendMessageToChannel, null, true, process.env.UTC_LOCATION).start()
+  new CronJob(process.env.CRON_JOB_TIMING, sendMessageToChannel(process.env.DISCORD_CHANNEL), null, true, process.env.UTC_LOCATION).start()
 })
 
 
