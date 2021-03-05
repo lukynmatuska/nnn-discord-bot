@@ -1,3 +1,4 @@
 .env
+pm2.config.sample.js
 node_modules/
 images/
