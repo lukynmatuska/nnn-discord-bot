@@ -11,6 +11,8 @@ const CronJob = require('cron').CronJob
 const figlet = require('figlet')
 const moment = require('moment')
 moment.locale('cs')
+const musicController = require('./controllers/music')
+const queue = new Map();
 
 function sendMessageToChannel(channel) {
   client.channels.cache.forEach(ch => {
@@ -111,7 +113,10 @@ client.once('ready', () => {
 
 
 client.on('message', message => {
+  if (message.author.bot) return;
+  if (!message.content.startsWith(config.prefix)) return;
   const m = message.content.toLowerCase()
+  const serverQueue = queue.get(message.guild.id);
   if (m === `${config.prefix}ping`) {
     message.channel.send('Pong.')
   } else if (m === `${config.prefix}help` || m === `${config.prefix}commands`) {
@@ -128,6 +133,12 @@ client.on('message', message => {
     } else if (month < 11) {
       message.channel.send(`Připrav se, výzva začíná ${moment('1.12.', 'D.MM.').fromNow()}`)
     }
+  } else if (message.content.startsWith(`${config.prefix}play`)) {
+    musicController.execute(message, serverQueue)
+  } else if (message.content.startsWith(`${config.prefix}skip`)) {
+    musicController.skip(message, serverQueue)
+  } else if (message.content.startsWith(`${config.prefix}stop`)) {
+    musicController.stop(message, serverQueue)
   }
 })
 
